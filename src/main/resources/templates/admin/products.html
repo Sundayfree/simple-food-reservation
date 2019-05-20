@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reservation Management System</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/2.1.4/jquery.js}"></script>
+
+</head>
+<style>
+    .btn-width{
+        width: 100px;
+    }
+    input[type='checkbox']{
+        margin-right: 8px;
+    }
+</style>
+<body>
+<div th:replace="~{commons/bars::navbar}"></div>
+    <div class="pageContainer">
+        <div th:replace="~{commons/bars::sidebar}"></div>
+        <div class="splitter"></div>
+        <div class="pageContent">
+            <div class="container" >
+            <div class="row clearfix ">
+                <div id="prod-btn">
+                    <p >
+                        <button type="button" class="btn btn-width btn-success" id="addbtn">ADD</button>
+                        <button type="button" class="btn btn-width btn-primary" id="updateBtn">UPDATE</button>
+                        <button type="button" class="btn btn-width btn-danger" id="deleteBtn">DELETE</button>
+                    </p>
+                    <div class="alert alert-danger collapse" id="myaAlert" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="myBtn">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>Warning!</strong>&nbsp&nbspYou have to choose a checkbox..
+                    </div>
+                </div>
+                <div class="col-md-12 column table-pos prod-table" >
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                PRODUCT_ID
+                            </th>
+                            <th>
+                                PRODUCT_NAME
+                            </th>
+                            <th>
+                                PRODUCT_IMG
+                            </th>
+                            <th>
+                                PRICE
+                            </th>
+                            <th>
+                                STOCK
+                            </th>
+                            <th>
+                                DESCRIPTION
+                            </th>
+                            <th>
+                                CREATE_TIME
+                            </th>
+                            <th>
+                                UPDATE_TIME
+                            </th>
+                            <th>
+                                STATE
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="prod:${products}">
+                            <td><input type="checkbox" th:text="${prod.getProID()}"
+                                       name="productItem"
+                                       th:attr="productId=${prod.getProID()}"/></td>
+                            <td th:text="${prod.getProdName()}"></td>
+                            <td ><img th:src="@{${prod.getProdImg()}}"  height="50" width="60"></td>
+                            <td th:text="${prod.getProdPrice()}"></td>
+                            <td th:text="${prod.getStock()}"></td>
+                            <td th:text="${prod.getProdDesc()}"></td>
+                             <td th:text="${#dates.format(prod.getCreateTime(), 'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${#dates.format(prod.getUpdateTime(), 'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:switch="${prod.getState()}">
+                                <a  th:case="1" th:href="@{/products/on_sell(proID=${prod.getProID()})}">on_sell</a>
+                                <a  th:case="0" th:href="@{/products/off_sell(proID=${prod.getProID()})}" style="color: red">off_sell</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+            <div class="page-pos prod-page">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"  th:class="${currentPage==1}?'disabled'">
+                            <a class="page-link" th:href="@{/products(page=${currentPage}-1,size=${size})}" aria-label="Previous">
+                                <span aria-hidden="true" >&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="index:${totalPage}">
+                            <a class="page-link" th:href="@{/products(page=${index},size=${size})}"
+                               th:class="${index==(pageInfo.getPageable().getPageNumber() + 1)} ? active"
+                               th:text="${index}"></a>
+                        </li>
+                        <li class="page-item" th:class="${currentPage==pageInfo.getTotalPages()}?'disabled'">
+                            <a class="page-link" th:href="@{/products(page=${currentPage}+1,size=${size})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+<div th:replace="~{commons/bars::footer}"></div>
+
+<script type="text/javascript">
+    var itemId;
+    $('input[type=checkbox]').click(function(){
+        itemId= $(this).attr('productId')
+        if(this.checked){
+            $('input[type=checkbox]').not(this).attr("checked", false);
+        }
+    });
+    $('#deleteBtn').click(function(){
+        if(!checkID(itemId))
+            location.href = '/delete?productId=' + itemId;
+
+    })
+    $('#updateBtn').click(function(){
+        if(!checkID(itemId))
+            location.href='/update?productId=' + itemId;
+    });
+    function checkID(id) {
+        if(id===undefined){
+            $('#myaAlert').show('fade')
+            setTimeout(function(){
+                $('#myaAlert').hide('fade')
+            },3000);
+            $('#myBtn').click(function(){
+                $('#myaAlert').hide('fade')
+            })
+            return true;
+        }
+        return false;
+    }
+    $('#addbtn').click(function(){
+        location.href='/add'
+    });
+</script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.js}"></script>
+</body>
+</html>

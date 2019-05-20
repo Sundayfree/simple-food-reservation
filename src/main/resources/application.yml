@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/reservation?useUnicode=true&characterEncoding=utf8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: l8036316
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  thymeleaf:
+    cache: false
+    mode: HMTL5
+  servlet:
+    multipart:
+      max-file-size:600KB
+  mail:
+    host: smtp.gmail.com
+    username: liuweltec2000@gmail.com
+    password: l8036316
+    port: 587
+    properties.smtp.starttls.enable: true
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.required: true
+server:
+  port: 8081
+
+
+#file path
+filePath: ../upload/
+fileAbsolutePath: /Users/lipliu/2172139_Assignment2_IT7374/reservation/src/main/resources/static/upload/

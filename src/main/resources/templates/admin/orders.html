@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reservation Management System</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/2.1.4/jquery.js}"></script>
+</head>
+<style>
+    .order-container{
+        margin-top: 65px;
+    }
+    .order-page{
+        margin-left: 27px;
+    }
+
+</style>
+<body>
+<div th:replace="~{commons/bars::navbar}"></div>
+<div class="pageContainer">
+    <div th:replace="~{commons/bars::sidebar}"></div>
+    <div class="splitter"></div>
+    <div class="pageContent">
+        <div class="container order-container" >
+        <div class="row clearfix ">
+            <div class="col-md-12 column table-pos " >
+                <table class="table table-bordered " >
+                    <thead>
+                    <tr>
+                        <th>
+                            Order_Id
+                        </th>
+                        <th>
+                            Product_Id
+                        </th>
+                        <th>
+                            Product_Name
+                        </th>
+                        <th>
+                            Product_Img
+                        </th>
+                        <th>
+                            Product_Price
+                        </th>
+                        <th>
+                            Product_Quantity
+                        </th>
+                        <th>
+                            Order_Detail
+                        </th>
+                        <th>
+                            Order_State
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail:${details}">
+                            <td th:text="${detail.getDetailId()}"></td>
+                            <td th:text="${detail.getProdId()}"></td>
+                            <td th:text="${detail.getProdName()}"></td>
+                            <td ><img th:src="@{${detail.getProdImg()}}" height="50" width="60" alt=""></td>
+                            <td th:text="${detail.getProdPrice()}"></td>
+                            <td th:text="${detail.getProdQuantity()}"></td>
+                            <td>
+                                <a th:href="@{/orders/detail(detailId=${detail.getDetailId()})}">Detail</a>
+                            </td>
+                            <td>
+                                <a th:text="${detail.getStatus()}==1?'PAID':'UNPAID'"></a>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        <div class="page-pos order-page">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"  th:class="${currentPage==1}?'disabled'">
+                        <a class="page-link" th:href="@{/orders(page=${currentPage}-1,size=${size})}" aria-label="Previous">
+                            <span aria-hidden="true" >&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="index:${totalPage}">
+                        <a class="page-link" th:href="@{/orders(page=${index},size=${size})}"
+                           th:class="${index==(pageInfo.getPageable().getPageNumber() + 1)} ? active"
+                           th:text="${index}"></a>
+                    </li>
+                    <li class="page-item" th:class="${currentPage==pageInfo.getTotalPages()}?'disabled'">
+                        <a class="page-link" th:href="@{/orders(page=${currentPage}+1,size=${size})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+<div th:replace="~{commons/bars::footer}"></div>
+
+<script>
+    var websocket = null;
+    if('WebSocket' in window) {
+        websocket = new WebSocket('ws://localhost:8081/webSocket');
+    }else {
+        alert('This browser dose not support websocket');
+    }
+    websocket.onmessage = function (event) {
+        console.log('recieving:' + event.data)
+        alert(event.data)
+    }
+
+    window.onbeforeunload = function () {
+        websocket.close();
+    }
+
+</script>
+</body>
+</html>

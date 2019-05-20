@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reservation Management System</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/2.1.4/jquery.js}"></script>
+</head>
+
+<body>
+<div th:replace="~{commons/bars::navbar}"></div>
+<div class="pageContainer">
+    <div th:replace="~{commons/bars::sidebar}"></div>
+    <div class="splitter"></div>
+    <div class="pageContent">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <form role="form" class="prod-form"  th:action="@{/uppdate/products}" method="post" enctype="multipart/form-data">
+<!--                       <p style="color: red" th:text="${errMsg}" th:if="${not #strings.isEmpty(errMsg)}" id="errMsg"></p>-->
+                        <input type="hidden" name="productId" th:value="${productId}"/>
+                        <div class="form-group">
+                            <label for="pname">ProductName:</label>
+                            <input type="text" class="form-control" id="pname" name="prodName" th:value="${product.getProdName()}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="priceid">Price:</label>
+                            <input type="number" class="form-control" id="priceid" name="prodPrice" th:value="${product.getProdPrice()}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="st">Stock:</label>
+                            <input type="number" class="form-control" id="st" name="stock" th:value="${product.getStock()}"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <img th:src="@{${product.getProdImg()}}" alt="" height="50" width="60">
+                        </div>
+                        <div class="form-group">
+                            <label >Image upload:</label>
+                            <input type="file"  name="file"/>
+                        </div>
+                        <label >Description:</label>
+                        <textarea class="form-control" rows="2" name="prodDesc" th:text="${product.getProdDesc()}"></textarea>
+                        <button type="submit" class="btn btn-primary prod-btn">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{commons/bars::footer}"></div>
+
+</body>
+
+</html>

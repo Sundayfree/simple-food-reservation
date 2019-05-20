@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reservation Management System</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/2.1.4/jquery.js}"></script>
+</head>
+<style>
+    .detail-container{
+        margin-top: 39px;
+    }
+</style>
+<body>
+<div th:replace="~{commons/bars::navbar}"></div>
+<div class="pageContainer">
+    <div th:replace="~{commons/bars::sidebar}"></div>
+    <div class="splitter"></div>
+    <div class="pageContent">
+        <div class="container detail-container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="col-md-12 column table-pos " >
+                        <table class="table table-bordered ">
+                            <thead>
+                            <tr>
+                                <th>
+                                    User_ID
+                                </th>
+                                <th>
+                                    User_Name
+                                </th>
+                                <th>
+                                    Product_Id
+                                </th>
+                                <th>
+                                    Product_Name
+                                </th>
+                                <th>
+                                    Product_Img
+                                </th>
+                                <th>
+                                    Product_Price
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <td th:text="${orderDetail.getUserID()}"></td>
+                                <td th:text="${orderDetail.getUsername()}"></td>
+                                <td th:text="${orderDetail.getProdId()}"></td>
+                                <td th:text="${orderDetail.getProdName()}"></td>
+                                <td ><img th:src="@{${orderDetail.prodImg}}" height="50" width="60" alt=""></td>
+                                <td th:text="${orderDetail.getProdPrice()}"></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{commons/bars::footer}"></div>
+
+</body>
+
+</html>

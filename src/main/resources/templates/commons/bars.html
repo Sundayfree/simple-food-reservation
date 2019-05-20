@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<nav class="navbar navbar-inverse" th:fragment="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand"  href="#">logo</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a href="#">You are logged in as &nbsp;&nbsp;<span class="badge" th:text="${session.currentUser.getUsername()}"></span></a>
+                </li>
+                <li>
+                    <a th:href="@{/manage/logout}">
+                        <span class="glyphicon glyphicon-lock"></span><span>logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="pageSidebar" th:fragment="sidebar">
+    <ul class="nav nav-stacked nav-pills">
+        <li>
+          <a th:href="@{/orders}" class="glyphicon glyphicon-tree-deciduous" style="font-size: 16px"><Strong>Order</Strong></a>
+        </li>
+        <li >
+            <a th:href="@{/products}" class="glyphicon glyphicon-tree-conifer" style="font-size: 16px"><Strong>Product</Strong></a>
+        </li>
+        <li >
+            <a th:href="@{/users}" class="glyphicon glyphicon-king" style="font-size: 16px"><Strong>Employee</Strong></a>
+        </li>
+    </ul>
+</div>
+
+
+
+<div class="footer" th:fragment="footer">
+    <p class="text-center">
+        2019 &copy; Liu.
+    </p>
+</div>
+
+</html>

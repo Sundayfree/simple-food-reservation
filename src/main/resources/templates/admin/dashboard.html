@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reservation Management System</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <div th:replace="~{commons/bars::navbar}"></div>
+    <div class="pageContainer">
+        <div th:replace="~{commons/bars::sidebar}"></div>
+        <div class="splitter"></div>
+        <div class="pageContent">
+            <div class="container">
+                <div class="row clearfix title1">
+                    <div class="col-md-12 column" >
+                        <h1 class="text-center text-info" style="font-size: 50px">
+                            Welcome to <strong>Reservation Management System</strong>
+                        </h1>
+                        <h3 class="text-center title2">
+                            <em>This management system</em> is a prototype system for <strong>Weltec</strong>.
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{commons/bars::footer}"></div>
+</body>
+</html>
